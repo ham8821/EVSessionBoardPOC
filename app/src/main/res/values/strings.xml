@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">EV</string>
+    <string name="tab_text_1">Plan Insights</string>
+    <string name="tab_text_2">EVerywhere</string>
+</resources>
