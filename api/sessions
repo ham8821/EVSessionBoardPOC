@@ -1,0 +1,168 @@
+{
+  "success": true,
+  "sessions": [
+    {
+      "id": 1,
+      "date": "2022-5-21T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 45.13,
+      "saving": 13.99,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": []
+    },
+    {
+      "id": 2,
+      "date": "2022-5-20T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 45.23,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": []
+    },
+    {
+      "id": 3,
+      "date": "2022-5-11T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 45.00,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": []
+    },
+    {
+      "id": 4,
+      "date": "2022-5-21T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 45.23,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": []
+    },
+    {
+      "id": 5,
+      "date": "2022-4-21T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 23.23,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": []
+    },
+    {
+      "id": 6,
+      "date": "2022-4-21T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 53.43,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": false,
+      "additionalCharge": [
+        {
+          "info": "Idle Charging fee : 5min",
+          "cost": 5.00,
+          "isCharged": true
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "date": "2022-3-21T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 14.32,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": []
+    },
+    {
+      "id": 8,
+      "date": "2022-3-20T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 45.34,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": []
+    },
+    {
+      "id": 9,
+      "date": "2022-2-21T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 123.23,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": [
+        {
+          "info": "Idle Charging fee : 5min",
+          "cost": 5,
+          "isCharged": true
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "date": "2022-2-2T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 12.32,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": true,
+      "additionalCharge": []
+    },
+    {
+      "id": 11,
+      "date": "2022-2-21T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 12.12,
+      "saving": 23.2,
+      "cost": 16.51,
+      "additionalCharge": []
+    },
+    {
+      "id": 12,
+      "date": "2022-2-1T01:11:11Z",
+      "address": "Parnell",
+      "startTime": "2022-5-21T01:11:11Z",
+      "duration": "30min",
+      "charge": 12.00,
+      "saving": 23.2,
+      "cost": 16.51,
+      "isCharged": false,
+      "additionalCharge": [
+        {
+          "info": "Idle Charging fee : 5min",
+          "cost": 5.12,
+          "isCharged": false
+        }
+      ]
+    }
+  ],
+  "number": 123,
+  "string": "Hello World"
+}

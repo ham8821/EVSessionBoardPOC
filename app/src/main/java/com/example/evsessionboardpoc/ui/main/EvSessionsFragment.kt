@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.evsessionboardpoc.data.model.Session
 import com.example.evsessionboardpoc.databinding.FragmentMainBinding
 
-class EvSessionsFragment : Fragment() {
+class EvSessionsFragment : Fragment(), SessionsView {
 
     private lateinit var pageViewModel: PageViewModel
     private var _binding: FragmentMainBinding? = null
@@ -67,5 +68,25 @@ class EvSessionsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun showLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun showRefresh() {
+        TODO("Not yet implemented")
+    }
+
+    override fun showSessions(sessions: List<Session>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showLoadingError(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showRefreshError(message: String) {
+        TODO("Not yet implemented")
     }
 }

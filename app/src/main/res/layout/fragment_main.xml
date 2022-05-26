@@ -96,13 +96,19 @@
                 android:text="Charging sessions"
                 android:textColor="@color/black" />
 
-            <TextView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_movies"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_gravity="center"
-                android:background="@color/grey"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="sessions RecyclerView" />
+                android:layout_height="match_parent"
+                tools:listitem="@layout/session_item" />
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="500dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:background="@color/grey"-->
+<!--                android:gravity="center_vertical|center_horizontal"-->
+<!--                android:text="sessions RecyclerView" />-->
 
         </LinearLayout>
 
