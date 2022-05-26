@@ -1,10 +1,16 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
     compileSdk 32
+    kapt {
+        generateStubs = true
+    }
 
     defaultConfig {
         applicationId "com.example.evsessionboardpoc"
@@ -49,6 +55,21 @@ dependencies {
     // Dagger 2
     implementation "com.google.dagger:dagger:$dagger2_version"
     implementation "com.google.dagger:dagger-compiler:$dagger2_version"
+
+
+    //dagger2
+    api "com.google.dagger:dagger:$dagger2_version"
+    api "com.google.dagger:dagger-android:$dagger2_version"
+    api "com.google.dagger:dagger-android-support:$dagger2_version"
+
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+    implementation 'javax.inject:javax.inject:1'
 
     // RxJava 2
     implementation "io.reactivex.rxjava2:rxjava:$rxjava2_version"

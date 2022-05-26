@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.evsessionboardpoc.EVApplication
 import com.example.evsessionboardpoc.data.model.Session
 import com.example.evsessionboardpoc.databinding.FragmentMainBinding
+import com.example.evsessionboardpoc.di.SessionsModule
 
 class EvSessionsFragment : Fragment(), SessionsView {
 
@@ -20,9 +22,17 @@ class EvSessionsFragment : Fragment(), SessionsView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        injectDependencies()
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
             setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
+    }
+
+    private fun injectDependencies() {
+        val app = activity?.application as EVApplication
+        app.getComponent()
+            .plus(SessionsModule())
+            .inject(this)
     }
 
     override fun onCreateView(
