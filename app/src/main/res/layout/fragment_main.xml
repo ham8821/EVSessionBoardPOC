@@ -2,7 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -98,20 +100,20 @@
                 android:text="Charging sessions"
                 android:textColor="@color/black" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_sessions"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/session_item" />
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:cardElevation="25dp"
+                app:cardCornerRadius="25dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_sessions"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:listitem="@layout/session_item" />
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="500dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:background="@color/grey"-->
-<!--                android:gravity="center_vertical|center_horizontal"-->
-<!--                android:text="sessions RecyclerView" />-->
-
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
     </RelativeLayout>
