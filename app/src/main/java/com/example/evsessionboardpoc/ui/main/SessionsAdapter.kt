@@ -8,16 +8,16 @@ import com.example.evsessionboardpoc.R
 import com.example.evsessionboardpoc.data.model.Session
 import kotlinx.android.synthetic.main.session_item.view.*
 
-class SessionsAdapter : RecyclerView.Adapter<SessionsAdapter.ViewHolder>(){
+class SessionsAdapter : RecyclerView.Adapter<SessionsAdapter.SessionViewHolder>(){
 
     private var sessions: List<Session> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.session_item, parent, false)
-        return ViewHolder(view)
+        return SessionViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SessionViewHolder, position: Int) {
         holder.bind(position)
     }
 
@@ -32,7 +32,7 @@ class SessionsAdapter : RecyclerView.Adapter<SessionsAdapter.ViewHolder>(){
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+    inner class SessionViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val titleView = item.session_item_title
 
         fun bind(position: Int) {
