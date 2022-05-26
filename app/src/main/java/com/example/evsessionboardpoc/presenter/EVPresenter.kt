@@ -1,5 +1,6 @@
 package com.example.evsessionboardpoc.presenter
 
+import android.util.Log
 import com.example.evsessionboardpoc.data.repository.SessionsRepository
 import com.example.evsessionboardpoc.data.rx.AppSchedulers
 import com.example.evsessionboardpoc.ui.main.SessionsView
@@ -17,11 +18,12 @@ class EVPresenter @Inject constructor(
             .subscribeOn(schedulers.io)
             .observeOn(schedulers.main)
             .doOnSubscribe {
-                view()?.showLoading()
+//                view()?.showLoading()
             }
             .subscribe({
                 view()?.showSessions(it)
             }, {
+                Log.d("Throw", "loadSessions: "+it.message)
                 view()?.showLoadingError(getErrorMessage(it))
             })
             .autoClear()

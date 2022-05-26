@@ -5,29 +5,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.evsessionboardpoc.EVApplication
 import com.example.evsessionboardpoc.data.model.Session
 import com.example.evsessionboardpoc.databinding.FragmentMainBinding
 import com.example.evsessionboardpoc.di.SessionsModule
+import com.example.evsessionboardpoc.presenter.EVPresenter
+import com.example.evsessionboardpoc.presenter.EVPresenterFactory
+import com.example.evsessionboardpoc.presenter.PresenterProviders
+import javax.inject.Inject
 
 class EvSessionsFragment : Fragment(), SessionsView {
 
-    private lateinit var pageViewModel: PageViewModel
-    private var _binding: FragmentMainBinding? = null
+    @Inject
+    lateinit var presenterFactory: EVPresenterFactory
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private lateinit var presenter: EVPresenter
+
+    private val adapter = SessionsAdapter()
+
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDependencies()
-        pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
-            setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
-        }
+        presenter = PresenterProviders.of(this, presenterFactory).get(EVPresenter::class.java)
+        presenter.attachView(this, lifecycle)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        initSpinner()
+        presenter.loadSessions()
+    }
     private fun injectDependencies() {
         val app = activity?.application as EVApplication
         app.getComponent()
@@ -42,8 +54,13 @@ class EvSessionsFragment : Fragment(), SessionsView {
 
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root = binding.root
-        initSpinner()
         return root
+    }
+
+
+    private fun setupRecyclerView() {
+        binding.recyclerviewSessions.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.recyclerviewSessions.adapter = adapter
     }
 
     private fun initSpinner() {
@@ -89,7 +106,7 @@ class EvSessionsFragment : Fragment(), SessionsView {
     }
 
     override fun showSessions(sessions: List<Session>) {
-        TODO("Not yet implemented")
+        adapter.updateSessions(sessions)
     }
 
     override fun showLoadingError(message: String) {

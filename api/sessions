@@ -1,6 +1,4 @@
-{
-  "success": true,
-  "sessions": [
+[
     {
       "id": 1,
       "date": "2022-5-21T01:11:11Z",
@@ -162,7 +160,4 @@
         }
       ]
     }
-  ],
-  "number": 123,
-  "string": "Hello World"
-}
+]

@@ -8,7 +8,7 @@
     android:focusable="true">
 
     <TextView
-        android:id="@+id/session_item"
+        android:id="@+id/session_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/appbar_padding"
