@@ -4,18 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.evsessionboardpoc.R
 import com.example.evsessionboardpoc.databinding.FragmentMainBinding
 
-/**
- * A placeholder fragment containing a simple view.
- */
-class PlaceholderFragment : Fragment() {
+class EvSessionsFragment : Fragment() {
 
     private lateinit var pageViewModel: PageViewModel
     private var _binding: FragmentMainBinding? = null
@@ -33,19 +26,21 @@ class PlaceholderFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
 
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root = binding.root
-        val items = arrayOf("All", "NY", "NC", "ND")
-        val adapter = NoPaddingDropdownAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, items.toMutableList())
-        binding.spinner1.adapter = adapter
-//        val textView: TextView = binding.sectionLabel
-//        pageViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
+        initSpinner()
         return root
+    }
+
+    private fun initSpinner() {
+        val items = arrayOf("All", "NY", "NC", "ND")
+        val adapter = NoPaddingDropdownAdapter(requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            items.toMutableList())
+        binding.spinner1.adapter = adapter
     }
 
     companion object {
@@ -60,8 +55,8 @@ class PlaceholderFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: Int): PlaceholderFragment {
-            return PlaceholderFragment().apply {
+        fun newInstance(sectionNumber: Int): EvSessionsFragment {
+            return EvSessionsFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_SECTION_NUMBER, sectionNumber)
                 }
