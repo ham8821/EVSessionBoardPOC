@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -37,11 +38,13 @@ class PlaceholderFragment : Fragment() {
 
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root = binding.root
-
-        val textView: TextView = binding.sectionLabel
-        pageViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        val items = arrayOf("All", "NY", "NC", "ND")
+        val adapter = NoPaddingDropdownAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, items.toMutableList())
+        binding.spinner1.adapter = adapter
+//        val textView: TextView = binding.sectionLabel
+//        pageViewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
         return root
     }
 
