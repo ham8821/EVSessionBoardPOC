@@ -2,6 +2,10 @@ package com.example.evsessionboardpoc.data.repository
 import com.example.evsessionboardpoc.data.model.Session
 import com.example.evsessionboardpoc.data.network.SessionsClient
 import io.reactivex.Single
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
 
 class SessionsRepository @Inject constructor(
@@ -12,10 +16,16 @@ class SessionsRepository @Inject constructor(
     fun loadSessions(): Single<List<Session>> {
         val sessions = sessionsCache
 
-        return if (sessions != null) {
-            Single.just(sessions)
+        if (sessions != null) {
+            return Single.just(sessions)
         } else {
-            sessionsClient.getSessions().doOnSuccess { sessionsCache = it }
+            return sessionsClient.getSessions().map {
+                it.sortedByDescending { it.date }
+//                val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+//                it.sortedByDescending { session -> dateFormatter.parse(session.date) }
+            }.doOnSuccess {
+                sessionsCache = it
+            }
         }
     }
 
