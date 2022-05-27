@@ -26,7 +26,11 @@ class SessionsAdapter : RecyclerView.Adapter<SessionsAdapter.SessionViewHolder>(
     }
 
     override fun onBindViewHolder(holder: SessionViewHolder, position: Int) {
-        holder.bind(position)
+
+        when(holder.itemViewType){
+            typeHeader -> {}
+            typeContentItem -> {holder.bind(position)}
+        }
     }
 
     override fun getItemCount(): Int = sessions.size
@@ -60,7 +64,6 @@ class SessionsAdapter : RecyclerView.Adapter<SessionsAdapter.SessionViewHolder>(
             val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
 
             val numberFormat = NumberFormat.getCurrencyInstance()
-//            numberFormat.maximumFractionDigits = 0;
             val formattedSavings = numberFormat.format(session.saving)
             val formattedCost = numberFormat.format(session.cost)
 
