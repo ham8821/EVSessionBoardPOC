@@ -1,83 +1,5 @@
 [
     {
-      "id": 1,
-      "date": "2022-5-21T01:11:11Z",
-      "address": "Parnell",
-      "startTime": "2022-5-21T01:11:11Z",
-      "duration": "30min",
-      "charge": 45.13,
-      "saving": 13.99,
-      "cost": 16.51,
-      "isCharged": true,
-      "additionalCharge": []
-    },
-    {
-      "id": 2,
-      "date": "2022-5-20T01:11:11Z",
-      "address": "Devonport",
-      "startTime": "2022-5-21T01:11:11Z",
-      "duration": "30min",
-      "charge": 45.23,
-      "saving": 23.2,
-      "cost": 16.51,
-      "isCharged": true,
-      "additionalCharge": []
-    },
-    {
-      "id": 3,
-      "date": "2022-5-11T01:11:11Z",
-      "address": "Ponsonby",
-      "startTime": "2022-5-21T01:11:11Z",
-      "duration": "30min",
-      "charge": 45.00,
-      "saving": 23.2,
-      "cost": 16.51,
-      "isCharged": true,
-      "additionalCharge": []
-    },
-    {
-      "id": 4,
-      "date": "2022-5-21T01:11:11Z",
-      "address": "Auckland CBD",
-      "startTime": "2022-5-21T01:11:11Z",
-      "duration": "30min",
-      "charge": 45.23,
-      "saving": 23.2,
-      "cost": 16.51,
-      "isCharged": true,
-      "additionalCharge": []
-    },
-    {
-      "id": 5,
-      "date": "2022-4-21T01:11:11Z",
-      "address": "Ponsonby",
-      "startTime": "2022-5-21T01:11:11Z",
-      "duration": "30min",
-      "charge": 23.23,
-      "saving": 23.2,
-      "cost": 16.51,
-      "isCharged": true,
-      "additionalCharge": []
-    },
-    {
-      "id": 6,
-      "date": "2022-4-21T01:11:11Z",
-      "address": "Parnell",
-      "startTime": "2022-5-21T01:11:11Z",
-      "duration": "30min",
-      "charge": 53.43,
-      "saving": 23.2,
-      "cost": 16.51,
-      "isCharged": false,
-      "additionalCharge": [
-        {
-          "info": "Idle Charging fee : 5min",
-          "cost": 5.00,
-          "isCharged": true
-        }
-      ]
-    },
-    {
       "id": 7,
       "date": "2022-3-21T01:11:11Z",
       "address": "Hamilton",
@@ -159,5 +81,83 @@
           "isCharged": false
         }
       ]
-    }
+    },
+    {
+          "id": 1,
+          "date": "2022-5-21T01:11:11Z",
+          "address": "Parnell",
+          "startTime": "2022-5-21T01:11:11Z",
+          "duration": "30min",
+          "charge": 45.13,
+          "saving": 13.99,
+          "cost": 16.51,
+          "isCharged": true,
+          "additionalCharge": []
+        },
+        {
+          "id": 2,
+          "date": "2022-5-20T01:11:11Z",
+          "address": "Devonport",
+          "startTime": "2022-5-21T01:11:11Z",
+          "duration": "30min",
+          "charge": 45.23,
+          "saving": 23.2,
+          "cost": 16.51,
+          "isCharged": true,
+          "additionalCharge": []
+        },
+        {
+          "id": 3,
+          "date": "2022-5-11T01:11:11Z",
+          "address": "Ponsonby",
+          "startTime": "2022-5-21T01:11:11Z",
+          "duration": "30min",
+          "charge": 45.00,
+          "saving": 23.2,
+          "cost": 16.51,
+          "isCharged": true,
+          "additionalCharge": []
+        },
+        {
+          "id": 4,
+          "date": "2022-5-21T01:11:11Z",
+          "address": "Auckland CBD",
+          "startTime": "2022-5-21T01:11:11Z",
+          "duration": "30min",
+          "charge": 45.23,
+          "saving": 23.2,
+          "cost": 16.51,
+          "isCharged": true,
+          "additionalCharge": []
+        },
+        {
+          "id": 5,
+          "date": "2022-4-21T01:11:11Z",
+          "address": "Ponsonby",
+          "startTime": "2022-5-21T01:11:11Z",
+          "duration": "30min",
+          "charge": 23.23,
+          "saving": 23.2,
+          "cost": 16.51,
+          "isCharged": true,
+          "additionalCharge": []
+        },
+        {
+          "id": 6,
+          "date": "2022-4-21T01:11:11Z",
+          "address": "Parnell",
+          "startTime": "2022-5-21T01:11:11Z",
+          "duration": "30min",
+          "charge": 53.43,
+          "saving": 23.2,
+          "cost": 16.51,
+          "isCharged": false,
+          "additionalCharge": [
+            {
+              "info": "Idle Charging fee : 5min",
+              "cost": 5.00,
+              "isCharged": true
+            }
+          ]
+        }
 ]

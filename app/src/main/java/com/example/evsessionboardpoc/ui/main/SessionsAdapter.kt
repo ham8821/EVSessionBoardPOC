@@ -27,10 +27,11 @@ class SessionsAdapter : RecyclerView.Adapter<SessionsAdapter.SessionViewHolder>(
 
     override fun onBindViewHolder(holder: SessionViewHolder, position: Int) {
 
-        when(holder.itemViewType){
-            typeHeader -> {}
-            typeContentItem -> {holder.bind(position)}
-        }
+//        when(holder.itemViewType){
+//            typeHeader -> {}
+//            typeContentItem -> {holder.bind(position)}
+//        }
+        holder.bind(position)
     }
 
     override fun getItemCount(): Int = sessions.size
