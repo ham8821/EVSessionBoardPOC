@@ -1,133 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/main_backgroundImage"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:contentDescription="Image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/android_background_1" />
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".ui.main.EvSessionsFragment">
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/main_backgroundImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="90dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="180dp"
-                    android:layout_height="170dp"
-                    android:layout_margin="16dp"
-                    android:background="@color/grey"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="Image" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/icon_background"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_round_more" />
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:contentDescription="Image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/android_background_1" />
 
             <LinearLayout
-                android:id="@+id/summary_row"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="16dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:text="Summary For"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".ui.main.EvSessionsFragment">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border"
-                    tools:ignore="UselessParent">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="90dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/spinner1"
+                    <TextView
+                        android:layout_width="180dp"
+                        android:layout_height="170dp"
+                        android:layout_margin="16dp"
+                        android:background="@color/grey"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="Image" />
+
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/black"
-                        android:overlapAnchor="false"
-                        android:spinnerMode="dropdown" />
+                        android:background="@drawable/icon_background"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_round_more" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/summary_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="Summary For"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        tools:ignore="UselessParent">
+
+                        <Spinner
+                            android:id="@+id/spinner1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/black"
+                            android:overlapAnchor="false"
+                            android:spinnerMode="dropdown" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/summary_item" />
+
+                <TextView
+                    android:id="@+id/sessions_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Charging sessions"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    app:cardCornerRadius="25dp"
+                    app:cardElevation="2dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_sessions"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/default_margin_small"
+                        android:layout_weight="1"
+                        tools:listitem="@layout/session_item" />
+
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress_circular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    app:trackColor="@color/dark_orange" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_summary"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                tools:itemCount="2"
-                tools:listitem="@layout/summary_item" />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/sessions_row"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Charging sessions"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                app:cardCornerRadius="25dp"
-                app:cardElevation="2dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_sessions"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/default_margin_small"
-                    android:layout_weight="1"
-                    tools:listitem="@layout/session_item" />
-
-            </androidx.cardview.widget.CardView>
-
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/progress_circular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                app:trackColor="@color/dark_orange" />
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</ScrollView>
+    </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

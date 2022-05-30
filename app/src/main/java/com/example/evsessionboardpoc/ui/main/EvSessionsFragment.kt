@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evsessionboardpoc.EVApplication
+import com.example.evsessionboardpoc.R
 import com.example.evsessionboardpoc.data.model.Session
 import com.example.evsessionboardpoc.databinding.FragmentMainBinding
 import com.example.evsessionboardpoc.di.SessionsModule
@@ -40,10 +42,19 @@ class EvSessionsFragment : Fragment(), SessionsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupSwipeRefresh()
         setupRecyclerView()
         initSpinner()
         presenter.loadSessions()
     }
+
+    private fun setupSwipeRefresh() {
+        binding.refreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.dark_orange))
+        binding.refreshLayout.setOnRefreshListener {
+            presenter.refreshSessions()
+        }
+    }
+
     private fun injectDependencies() {
         val app = activity?.application as EVApplication
         app.getComponent()
@@ -111,14 +122,10 @@ class EvSessionsFragment : Fragment(), SessionsView {
 
     override fun showLoading() {
         binding.progressCircular.visibility = View.VISIBLE
-        binding.constraintLayout.visibility = View.GONE
-        binding.sessionsRow.visibility = View.GONE
-        binding.summaryRow.visibility = View.GONE
-        TODO("Not yet implemented")
     }
 
     override fun showRefresh() {
-        TODO("Not yet implemented")
+        binding.refreshLayout.isRefreshing = true
     }
 
     override fun showSessions(sessions: HashMap<String, List<Session>>) {
@@ -126,6 +133,10 @@ class EvSessionsFragment : Fragment(), SessionsView {
         binding.sessionsRow.visibility = View.VISIBLE
         binding.summaryRow.visibility = View.VISIBLE
         binding.progressCircular.visibility = View.GONE
+
+        binding.refreshLayout.visibility = View.VISIBLE
+        binding.refreshLayout.isRefreshing = false
+
         sessionAdapter.updateSessions(sessions)
         summaryAdapter.updateSummaryItems(sessions)
     }
