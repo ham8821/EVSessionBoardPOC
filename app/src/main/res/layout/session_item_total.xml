@@ -5,53 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/round_shape">
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
     <TextView
-        android:id="@+id/session_header_date"
+        android:id="@+id/session_item_date"
         android:layout_width="0dp"
         android:layout_weight="3"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/default_margin_small"
+        android:layout_marginVertical="@dimen/default_margin_small"
         android:maxLines="1"
-        android:textColor="@color/black"
-        android:textStyle="bold"
+        android:paddingStart="@dimen/default_margin_small"
         app:autoSizeMaxTextSize="20sp"
         app:autoSizeMinTextSize="4dp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
         android:layout_gravity="center_vertical"
-        tools:text="{February 2022}" />
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="Total" />
 
     <TextView
-        android:id="@+id/session_header_savings"
+        android:id="@+id/total_savings"
         android:layout_width="0dp"
         android:layout_weight="0.8"
         android:layout_height="match_parent"
+        android:background="@color/green"
+        android:textColor="@color/black"
         android:layout_margin="@dimen/default_margin_small"
-        android:text="Savings"
-        android:visibility="gone"
         android:maxLines="1"
         app:autoSizeMaxTextSize="20sp"
         app:autoSizeMinTextSize="4dp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        tools:text="{savings}" />
 
     <TextView
-        android:id="@+id/session_header_cost"
+        android:id="@+id/total_cost"
         android:layout_width="0dp"
         android:layout_weight="1.2"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/default_margin_small"
-        android:visibility="gone"
-        android:text="Cost"
         android:maxLines="1"
         app:autoSizeMaxTextSize="20sp"
         app:autoSizeMinTextSize="4dp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
         android:layout_gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         tools:text="{cost}" />
-
 </LinearLayout>

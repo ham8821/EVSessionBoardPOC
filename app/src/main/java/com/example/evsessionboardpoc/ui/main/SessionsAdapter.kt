@@ -5,18 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evsessionboardpoc.R
-import com.example.evsessionboardpoc.data.model.DateItem
-import com.example.evsessionboardpoc.data.model.GeneralItem
-import com.example.evsessionboardpoc.data.model.ListItem
-import com.example.evsessionboardpoc.data.model.Session
+import com.example.evsessionboardpoc.data.model.*
 import kotlinx.android.synthetic.main.session_header.view.*
 import kotlinx.android.synthetic.main.session_item.view.*
+import kotlinx.android.synthetic.main.session_item.view.session_item_date
+import kotlinx.android.synthetic.main.session_item_total.view.*
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var sessions: List<ListItem> = emptyList()
 
@@ -36,6 +35,10 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                 val v2: View = inflater.inflate(R.layout.session_header, parent, false)
                 viewHolder = DateViewHolder(v2)
             }
+            ListItem.TYPE_TOTAL -> {
+                val v3: View = inflater.inflate(R.layout.session_item_total, parent, false)
+                viewHolder = TotalViewHolder(v3)
+            }
         }
         return viewHolder!!
     }
@@ -48,8 +51,12 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                 (holder as GeneralViewHolder).bind(position)
             }
 
-            ListItem.TYPE_DATE ->
+            ListItem.TYPE_DATE -> {
                 (holder as DateViewHolder).bind(position)
+            }
+            ListItem.TYPE_TOTAL -> {
+                (holder as TotalViewHolder).bind(position)
+            }
         }
     }
 
@@ -73,11 +80,20 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             val dateItem = DateItem()
             dateItem.date = date
             consolidatedList.add(dateItem)
+            var savingsTotal = 0.00
+            var costTotal = 0.00
             for (item in list[date]!!) {
                 val generalItem = GeneralItem()
                 generalItem.session = item
                 consolidatedList.add(generalItem)
+                savingsTotal += item.saving
+                costTotal += item.cost
             }
+
+            val totalItem = TotalItem()
+            totalItem.savings = savingsTotal
+            totalItem.cost = costTotal
+            consolidatedList.add(totalItem)
         }
 
         this.sessions = consolidatedList
@@ -112,7 +128,7 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         return groupedHashMap
     }
 
-     fun Date.dateToString(format: String): String {
+    fun Date.dateToString(format: String): String {
         //simple date formatter
         val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
         //return the formatted date string
@@ -148,13 +164,27 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         private val savingsView = item.session_header_savings
         private val costView = item.session_header_cost
 
-        fun bind(position: Int){
+        fun bind(position: Int) {
             val item = sessions[position] as DateItem
             dateView.text = item.date
-            if (position == 0){
+            if (position == 0) {
                 savingsView.visibility = View.VISIBLE
                 costView.visibility = View.VISIBLE
             }
+        }
+    }
+
+    inner class TotalViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+        private val savingsView = item.total_savings
+        private val costView = item.total_cost
+
+        fun bind(position: Int) {
+            val item = sessions[position] as TotalItem
+            val numberFormat = NumberFormat.getCurrencyInstance()
+            val formattedSavings = numberFormat.format(item.savings)
+            val formattedCost = numberFormat.format(item.cost)
+            savingsView.text = formattedSavings.toString()
+            costView.text = formattedCost.toString()
         }
     }
 }
