@@ -1,5 +1,6 @@
 package com.example.evsessionboardpoc.ui.main
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +52,7 @@ class SessionsAdapter(val tags: String) : RecyclerView.Adapter<RecyclerView.View
             TYPE_SUMMARY -> {
                 val view: View = inflater.inflate(R.layout.summary_item, parent, false)
                 view.layoutParams.width = (parent.width * 0.4).toInt()
-                viewHolder = SummaryViewHolder(view)
+                viewHolder = SummaryViewHolder(view, parent.context)
             }
 
         }
@@ -88,10 +89,10 @@ class SessionsAdapter(val tags: String) : RecyclerView.Adapter<RecyclerView.View
 
     fun setSessions(map: HashMap<String, List<Session>>) {
         // We linearly add every item into the consolidatedList.
-        this.sessions = createListwithMapItems(map)
+        this.sessions = createSessionListWithMapItems(map)
     }
 
-    private fun createListwithMapItems(
+    private fun createSessionListWithMapItems(
         map: HashMap<String, List<Session>>,
     ): MutableList<ListItem> {
         val consolidatedList: MutableList<ListItem> = ArrayList()
@@ -128,6 +129,10 @@ class SessionsAdapter(val tags: String) : RecyclerView.Adapter<RecyclerView.View
     }
 
     private fun setItems(map: HashMap<String, List<Session>>) {
+        this.items = createSummaryListWithMap(map)
+    }
+
+    private fun createSummaryListWithMap(map: HashMap<String, List<Session>>): List<SummaryItem> {
         val list: ArrayList<SummaryItem> = ArrayList()
         val numberFormat = NumberFormat.getCurrencyInstance()
         var totalSavings = 0.00
@@ -141,10 +146,10 @@ class SessionsAdapter(val tags: String) : RecyclerView.Adapter<RecyclerView.View
         }
         val formattedSavings = numberFormat.format(totalSavings)
         val formattedCost = numberFormat.format(totalCost)
-        list.add(SummaryItem("Total savings", formattedSavings))
-        list.add(SummaryItem("Total cost", formattedCost))
-        list.add(SummaryItem("Total charge duration", totalChargeDuration))
-        this.items = list
+        list.add(SummaryItem(SummaryItemType.SAVINGS.name, formattedSavings))
+        list.add(SummaryItem(SummaryItemType.COST.name, formattedCost))
+        list.add(SummaryItem(SummaryItemType.DURATION.name, totalChargeDuration))
+        return list
     }
 
     inner class GeneralViewHolder(item: View) : RecyclerView.ViewHolder(item) {
@@ -200,13 +205,20 @@ class SessionsAdapter(val tags: String) : RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    inner class SummaryViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+    inner class SummaryViewHolder(item: View, context: Context) : RecyclerView.ViewHolder(item) {
         private val title = item.summary_title
         private val value = item.summary_value
-
+        private val context = context
         fun bind(position: Int) {
             val item = items[position] as SummaryItem
-
+            when(item.title){
+                SummaryItemType.SAVINGS.name -> {
+                    value.setTextColor(context.getColor(R.color.green))
+                }
+                SummaryItemType.DURATION.name -> {
+                    title.setCompoundDrawables(null, null, null, null)
+                }
+            }
             title.text = item.title
             value.text = item.value
         }

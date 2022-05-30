@@ -22,14 +22,13 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:drawableEnd="@drawable/ic_baseline_info_24"
-            android:drawablePadding="@dimen/appbar_padding_top"
             tools:text="Total savings"/>
 
         <TextView
             android:id="@+id/summary_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/green"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="25dp"
             tools:text="{$40.07}"/>
