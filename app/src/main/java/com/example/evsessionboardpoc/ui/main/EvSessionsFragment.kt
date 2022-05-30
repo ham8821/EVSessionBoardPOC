@@ -110,6 +110,10 @@ class EvSessionsFragment : Fragment(), SessionsView {
     }
 
     override fun showLoading() {
+        binding.progressCircular.visibility = View.VISIBLE
+        binding.constraintLayout.visibility = View.GONE
+        binding.sessionsRow.visibility = View.GONE
+        binding.summaryRow.visibility = View.GONE
         TODO("Not yet implemented")
     }
 
@@ -118,6 +122,10 @@ class EvSessionsFragment : Fragment(), SessionsView {
     }
 
     override fun showSessions(sessions: HashMap<String, List<Session>>) {
+        binding.constraintLayout.visibility = View.VISIBLE
+        binding.sessionsRow.visibility = View.VISIBLE
+        binding.summaryRow.visibility = View.VISIBLE
+        binding.progressCircular.visibility = View.GONE
         sessionAdapter.updateSessions(sessions)
         summaryAdapter.updateSummaryItems(sessions)
     }

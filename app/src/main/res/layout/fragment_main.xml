@@ -50,6 +50,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/summary_row"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -92,6 +94,8 @@
                 tools:listitem="@layout/summary_item" />
 
             <TextView
+                android:id="@+id/sessions_row"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -110,11 +114,18 @@
                     android:id="@+id/recyclerview_sessions"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_margin="@dimen/default_margin_small"
+                    android:layout_weight="1"
                     tools:listitem="@layout/session_item" />
 
             </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress_circular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                app:trackColor="@color/dark_orange" />
         </LinearLayout>
 
     </RelativeLayout>
