@@ -1,15 +1,17 @@
 package com.example.evsessionboardpoc.ui.main
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evsessionboardpoc.R
 import com.example.evsessionboardpoc.data.model.Session
+import com.example.evsessionboardpoc.data.model.SummaryItemType
 import kotlinx.android.synthetic.main.summary_item.view.*
 import java.text.NumberFormat
 
-class SummaryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SummaryAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: List<SummaryItem> = emptyList()
 
     override fun onCreateViewHolder(
@@ -20,7 +22,7 @@ class SummaryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val inflater = LayoutInflater.from(parent.context)
         val view: View = inflater.inflate(R.layout.summary_item, parent, false)
         view.layoutParams.width = (parent.width * 0.4).toInt()
-        viewHolder = SummaryViewHolder(view)
+        viewHolder = SummaryViewHolder(view, parent.context)
         return viewHolder!!
     }
 
@@ -32,51 +34,54 @@ class SummaryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return items.size
     }
 
-    fun setSessions(sessions: List<Session>) {
-        val map = groupDataIntoHashMap(sessions)
-        val list: ArrayList<SummaryItem> = ArrayList()
-        map.forEach{ mapItem ->
-            mapItem.key
-            list.add(SummaryItem(mapItem.key, mapItem.value))
-        }
-        this.items = list
-    }
-
-    fun updateSessions(sessions: List<Session>) {
-        setSessions(sessions)
+    fun updateSummaryItems(sessionsMap: java.util.HashMap<String, List<Session>>) {
+        setItems(sessionsMap)
         notifyDataSetChanged()
     }
 
-    inner class SummaryViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+    private fun setItems(map: java.util.HashMap<String, List<Session>>) {
+        this.items = createSummaryListWithMap(map)
+        notifyDataSetChanged()
+    }
+
+    private fun createSummaryListWithMap(map: java.util.HashMap<String, List<Session>>): List<SummaryItem> {
+        val list: java.util.ArrayList<SummaryItem> = java.util.ArrayList()
+        val numberFormat = NumberFormat.getCurrencyInstance()
+        var totalSavings = 0.00
+        var totalCost = 0.00
+        var totalChargeDuration = "7h 24m"
+        map.forEach{ mapItem ->
+            mapItem.value.forEach {
+                totalSavings += it.saving
+                totalCost += it.cost
+            }
+        }
+        val formattedSavings = numberFormat.format(totalSavings)
+        val formattedCost = numberFormat.format(totalCost)
+        list.add(SummaryItem(SummaryItemType.SAVINGS.name, formattedSavings))
+        list.add(SummaryItem(SummaryItemType.COST.name, formattedCost))
+        list.add(SummaryItem(SummaryItemType.DURATION.name, totalChargeDuration))
+        return list
+    }
+
+    inner class SummaryViewHolder(item: View, context: Context) : RecyclerView.ViewHolder(item) {
         private val title = item.summary_title
         private val value = item.summary_value
-
+        private val context = context
         fun bind(position: Int) {
             val item = items[position] as SummaryItem
-
+            when(item.title){
+                SummaryItemType.SAVINGS.name -> {
+                    value.setTextColor(context.getColor(R.color.green))
+                }
+                SummaryItemType.DURATION.name -> {
+                    title.setCompoundDrawables(null, null, null, null)
+                }
+            }
             title.text = item.title
             value.text = item.value
         }
     }
-}
-
-private fun groupDataIntoHashMap(list: List<Session>): HashMap<String, String> {
-    val map = HashMap<String, String>()
-    var totalSavings = 0.00
-    var totalCost = 0.00
-    var totalChargeDuration = "7h 24m"
-    list.forEach { session ->
-        totalSavings += session.saving
-        totalCost += session.cost
-    }
-    val numberFormat = NumberFormat.getCurrencyInstance()
-    val formattedSavings = numberFormat.format(totalSavings)
-    val formattedCost = numberFormat.format(totalCost)
-
-    map["Total charge duration"] = totalChargeDuration
-    map["Total cost"] = formattedCost
-    map["Total savings"] = formattedSavings
-    return map
 }
 
 
