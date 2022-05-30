@@ -1,16 +1,13 @@
 package com.example.evsessionboardpoc.ui.main
 
-import android.content.ClipData
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evsessionboardpoc.R
-import com.example.evsessionboardpoc.data.model.*
-import kotlinx.android.synthetic.main.session_item_total.view.*
+import com.example.evsessionboardpoc.data.model.Session
 import kotlinx.android.synthetic.main.summary_item.view.*
 import java.text.NumberFormat
-import java.time.Duration
 
 class SummaryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: List<SummaryItem> = emptyList()
@@ -22,6 +19,7 @@ class SummaryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var viewHolder: RecyclerView.ViewHolder? = null
         val inflater = LayoutInflater.from(parent.context)
         val view: View = inflater.inflate(R.layout.summary_item, parent, false)
+        view.layoutParams.width = (parent.width * 0.4).toInt()
         viewHolder = SummaryViewHolder(view)
         return viewHolder
     }
