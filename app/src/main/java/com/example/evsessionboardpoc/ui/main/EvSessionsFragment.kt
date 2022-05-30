@@ -15,6 +15,7 @@ import com.example.evsessionboardpoc.di.SessionsModule
 import com.example.evsessionboardpoc.presenter.EVPresenter
 import com.example.evsessionboardpoc.presenter.EVPresenterFactory
 import com.example.evsessionboardpoc.presenter.PresenterProviders
+import java.util.HashMap
 import javax.inject.Inject
 
 class EvSessionsFragment : Fragment(), SessionsView {
@@ -24,9 +25,8 @@ class EvSessionsFragment : Fragment(), SessionsView {
 
     private lateinit var presenter: EVPresenter
 
-    private val sessionAdapter = SessionsAdapter()
-
-    private val summaryAdapter = SummaryAdapter()
+    private val sessionAdapter = SessionsAdapter(TYPE_SESSIONS)
+    private val summaryAdapter = SessionsAdapter(TYPE_SUMMARY)
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -81,6 +81,9 @@ class EvSessionsFragment : Fragment(), SessionsView {
     }
 
     companion object {
+
+        const val TYPE_SESSIONS = "adapter_sessions"
+        const val TYPE_SUMMARY = "adapter_summary"
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -114,9 +117,9 @@ class EvSessionsFragment : Fragment(), SessionsView {
         TODO("Not yet implemented")
     }
 
-    override fun showSessions(sessions: List<Session>) {
+    override fun showSessions(sessions: HashMap<String, List<Session>>) {
         sessionAdapter.updateSessions(sessions)
-        summaryAdapter.updateSessions(sessions)
+        summaryAdapter.updateSummaryItems(sessions)
     }
 
     override fun showLoadingError(message: String) {

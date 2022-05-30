@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.evsessionboardpoc.data.repository.SessionsRepository
 import com.example.evsessionboardpoc.data.rx.AppSchedulers
 import com.example.evsessionboardpoc.ui.main.SessionsView
+import com.example.evsessionboardpoc.ui.main.groupDataIntoHashMap
 import java.io.IOException
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ class EVPresenter @Inject constructor(
 //                view()?.showLoading()
             }
             .subscribe({
-                view()?.showSessions(it)
+                view()?.showSessions(it.groupDataIntoHashMap())
             }, {
                 Log.d("Throw", "loadSessions: "+it.message)
                 view()?.showLoadingError(getErrorMessage(it))
@@ -34,7 +35,7 @@ class EVPresenter @Inject constructor(
             .subscribeOn(schedulers.io)
             .observeOn(schedulers.main)
             .subscribe({
-                view()?.showSessions(it)
+                view()?.showSessions(it.groupDataIntoHashMap())
             }, {
                 view()?.showRefreshError(getErrorMessage(it))
             })

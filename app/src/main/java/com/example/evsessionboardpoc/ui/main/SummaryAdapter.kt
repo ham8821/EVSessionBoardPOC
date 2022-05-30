@@ -21,11 +21,11 @@ class SummaryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val view: View = inflater.inflate(R.layout.summary_item, parent, false)
         view.layoutParams.width = (parent.width * 0.4).toInt()
         viewHolder = SummaryViewHolder(view)
-        return viewHolder
+        return viewHolder!!
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as SummaryAdapter.SummaryViewHolder).bind(position)
+        (holder as SummaryViewHolder).bind(position)
     }
 
     override fun getItemCount(): Int {

@@ -6,18 +6,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.evsessionboardpoc.R
 import com.example.evsessionboardpoc.data.model.*
+import com.example.evsessionboardpoc.ui.main.EvSessionsFragment.Companion.TYPE_SESSIONS
+import com.example.evsessionboardpoc.ui.main.EvSessionsFragment.Companion.TYPE_SUMMARY
 import kotlinx.android.synthetic.main.session_header.view.*
 import kotlinx.android.synthetic.main.session_item.view.*
 import kotlinx.android.synthetic.main.session_item.view.session_item_date
 import kotlinx.android.synthetic.main.session_item_total.view.*
+import kotlinx.android.synthetic.main.summary_item.view.*
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SessionsAdapter(val tags: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var sessions: List<ListItem> = emptyList()
+    private var items: List<SummaryItem> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,63 +29,79 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ): RecyclerView.ViewHolder {
         var viewHolder: RecyclerView.ViewHolder? = null
         val inflater = LayoutInflater.from(parent.context)
-        when (viewType) {
-            ListItem.TYPE_GENERAL -> {
-                val v1: View = inflater.inflate(R.layout.session_item, parent,
-                    false)
-                viewHolder = GeneralViewHolder(v1)
+
+        when (tags) {
+            TYPE_SESSIONS -> {
+                when (viewType) {
+                    ListItem.TYPE_GENERAL -> {
+                        val v1: View = inflater.inflate(R.layout.session_item, parent,
+                            false)
+                        viewHolder = GeneralViewHolder(v1)
+                    }
+                    ListItem.TYPE_DATE -> {
+                        val v2: View = inflater.inflate(R.layout.session_header, parent, false)
+                        viewHolder = DateViewHolder(v2)
+                    }
+                    ListItem.TYPE_TOTAL -> {
+                        val v3: View = inflater.inflate(R.layout.session_item_total, parent, false)
+                        viewHolder = TotalViewHolder(v3)
+                    }
+                }
             }
-            ListItem.TYPE_DATE -> {
-                val v2: View = inflater.inflate(R.layout.session_header, parent, false)
-                viewHolder = DateViewHolder(v2)
+            TYPE_SUMMARY -> {
+                val view: View = inflater.inflate(R.layout.summary_item, parent, false)
+                view.layoutParams.width = (parent.width * 0.4).toInt()
+                viewHolder = SummaryViewHolder(view)
             }
-            ListItem.TYPE_TOTAL -> {
-                val v3: View = inflater.inflate(R.layout.session_item_total, parent, false)
-                viewHolder = TotalViewHolder(v3)
-            }
+
         }
         return viewHolder!!
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (tags) {
+            TYPE_SESSIONS -> {
+                when (holder.itemViewType) {
 
-        when (holder.itemViewType) {
-
-            ListItem.TYPE_GENERAL -> {
-                (holder as GeneralViewHolder).bind(position)
+                    ListItem.TYPE_GENERAL -> {
+                        (holder as GeneralViewHolder).bind(position)
+                    }
+                    ListItem.TYPE_DATE -> {
+                        (holder as DateViewHolder).bind(position)
+                    }
+                    ListItem.TYPE_TOTAL -> {
+                        (holder as TotalViewHolder).bind(position)
+                    }
+                }
             }
-            ListItem.TYPE_DATE -> {
-                (holder as DateViewHolder).bind(position)
-            }
-            ListItem.TYPE_TOTAL -> {
-                (holder as TotalViewHolder).bind(position)
-            }
+            TYPE_SUMMARY -> (holder as SummaryViewHolder).bind(position)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return sessions[position].type
+        return if(tags == TYPE_SESSIONS) sessions[position].type else 0
     }
 
     override fun getItemCount(): Int {
-        return if (sessions != null) sessions.size else 0
+        return if (tags == TYPE_SESSIONS) sessions.size else items.size
     }
 
-    fun setSessions(sessions: List<Session>) {
-
-        val list = sessions.groupDataIntoHashMap()
-
+    fun setSessions(map: HashMap<String, List<Session>>) {
         // We linearly add every item into the consolidatedList.
-        // We linearly add every item into the consolidatedList.
+        this.sessions = createListwithMapItems(map)
+    }
+
+    private fun createListwithMapItems(
+        map: HashMap<String, List<Session>>,
+    ): MutableList<ListItem> {
         val consolidatedList: MutableList<ListItem> = ArrayList()
-
-        for (date in list.keys) {
+        for (date in map.keys) {
             val dateItem = DateItem()
             dateItem.date = date
             consolidatedList.add(dateItem)
             var savingsTotal = 0.00
             var costTotal = 0.00
-            for (item in list[date]!!) {
+            for (item in map[date]!!) {
                 val generalItem = GeneralItem()
                 generalItem.session = item
                 consolidatedList.add(generalItem)
@@ -94,44 +114,37 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             totalItem.cost = costTotal
             consolidatedList.add(totalItem)
         }
-
-        this.sessions = consolidatedList
+        return consolidatedList
     }
 
-    fun updateSessions(sessions: List<Session>) {
-        setSessions(sessions)
+    fun updateSessions(sessionsMap: HashMap<String, List<Session>>) {
+        setSessions(sessionsMap)
         notifyDataSetChanged()
     }
 
-    fun List<Session>.groupDataIntoHashMap(): HashMap<String, List<Session>> {
-        val groupedHashMap: HashMap<String, List<Session>> = HashMap()
-
-        for (session in this) {
-            val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-            val hashMapKey: String = dateFormatter.parse(session.date).dateToString("MMMM YYYY")
-            if (groupedHashMap.containsKey(hashMapKey)) {
-                // The key is already in the HashMap; add the pojo object
-                // against the existing key.
-
-                val list = groupedHashMap[hashMapKey]?.toMutableList()
-                list?.add(session)
-                groupedHashMap[hashMapKey] = list as List<Session>
-            } else {
-                // The key is not there in the HashMap; create a new key-value pair
-                val list: MutableList<Session> = ArrayList()
-                list.add(session)
-                groupedHashMap[hashMapKey] = list
-            }
-        }
-
-        return groupedHashMap
+    fun updateSummaryItems(sessionsMap: HashMap<String, List<Session>>) {
+        setItems(sessionsMap)
+        notifyDataSetChanged()
     }
 
-    fun Date.dateToString(format: String): String {
-        //simple date formatter
-        val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
-        //return the formatted date string
-        return dateFormatter.format(this)
+    private fun setItems(map: HashMap<String, List<Session>>) {
+        val list: ArrayList<SummaryItem> = ArrayList()
+        val numberFormat = NumberFormat.getCurrencyInstance()
+        var totalSavings = 0.00
+        var totalCost = 0.00
+        var totalChargeDuration = "7h 24m"
+        map.forEach{ mapItem ->
+            mapItem.value.forEach {
+                totalSavings += it.saving
+                totalCost += it.cost
+            }
+        }
+        val formattedSavings = numberFormat.format(totalSavings)
+        val formattedCost = numberFormat.format(totalCost)
+        list.add(SummaryItem("Total savings", formattedSavings))
+        list.add(SummaryItem("Total cost", formattedCost))
+        list.add(SummaryItem("Total charge duration", totalChargeDuration))
+        this.items = list
     }
 
     inner class GeneralViewHolder(item: View) : RecyclerView.ViewHolder(item) {
@@ -184,6 +197,18 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val formattedCost = numberFormat.format(item.cost)
             savingsView.text = formattedSavings.toString()
             costView.text = formattedCost.toString()
+        }
+    }
+
+    inner class SummaryViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+        private val title = item.summary_title
+        private val value = item.summary_value
+
+        fun bind(position: Int) {
+            val item = items[position] as SummaryItem
+
+            title.text = item.title
+            value.text = item.value
         }
     }
 }
