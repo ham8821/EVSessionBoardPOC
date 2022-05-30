@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/default_padding"
+    android:layout_margin="@dimen/default_margin_small"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="25dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|center_horizontal"
+        android:padding="@dimen/default_padding"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/summary_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:drawableEnd="@drawable/ic_baseline_info_24"
+            android:drawablePadding="@dimen/appbar_padding_top"
+            tools:text="Total savings"/>
+
+        <TextView
+            android:id="@+id/summary_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            tools:text="{$40.07}"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

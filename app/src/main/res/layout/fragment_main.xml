@@ -83,13 +83,21 @@
 
             </LinearLayout>
 
-            <TextView
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:background="@color/grey"-->
+<!--                android:gravity="center_vertical|center_horizontal"-->
+<!--                android:text="Summary Horizontal ScrollView" />-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_summary"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:background="@color/grey"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="Summary Horizontal ScrollView" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/default_margin_small"
+                tools:listitem="@layout/summary_item" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -104,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 app:cardCornerRadius="25dp"
-                app:cardElevation="25dp">
+                app:cardElevation="2dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_sessions"

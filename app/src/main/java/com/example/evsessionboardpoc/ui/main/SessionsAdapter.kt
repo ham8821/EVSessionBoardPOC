@@ -50,7 +50,6 @@ class SessionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ListItem.TYPE_GENERAL -> {
                 (holder as GeneralViewHolder).bind(position)
             }
-
             ListItem.TYPE_DATE -> {
                 (holder as DateViewHolder).bind(position)
             }

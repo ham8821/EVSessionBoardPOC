@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.evsessionboardpoc.EVApplication
 import com.example.evsessionboardpoc.data.model.Session
 import com.example.evsessionboardpoc.databinding.FragmentMainBinding
@@ -23,7 +24,9 @@ class EvSessionsFragment : Fragment(), SessionsView {
 
     private lateinit var presenter: EVPresenter
 
-    private val adapter = SessionsAdapter()
+    private val sessionAdapter = SessionsAdapter()
+
+    private val summaryAdapter = SummaryAdapter()
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -60,9 +63,13 @@ class EvSessionsFragment : Fragment(), SessionsView {
 
 
     private fun setupRecyclerView() {
+
         binding.recyclerviewSessions.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.recyclerviewSessions.layoutManager = LinearLayoutManager(context)
-        binding.recyclerviewSessions.adapter = adapter
+        binding.recyclerviewSessions.adapter = sessionAdapter
+
+        binding.recyclerviewSummary.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        binding.recyclerviewSummary.adapter = summaryAdapter
     }
 
     private fun initSpinner() {
@@ -108,7 +115,8 @@ class EvSessionsFragment : Fragment(), SessionsView {
     }
 
     override fun showSessions(sessions: List<Session>) {
-        adapter.updateSessions(sessions)
+        sessionAdapter.updateSessions(sessions)
+        summaryAdapter.updateSessions(sessions)
     }
 
     override fun showLoadingError(message: String) {
